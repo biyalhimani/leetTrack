@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | LeetTrack
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <section class="dashboard-container">
+
+        <div class="dashboard-header">
+
+            <div>
+                <h1>Welcome, {{ session["user_name"] }} 👋</h1>
+                <p>Track your coding progress and stay consistent.</p>
+            </div>
+
+            <div class="dashboard-buttons">
+                <a href="{{ url_for('add_problem') }}" class="btn btn-cta">
+                    + Add Problem
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Total Solved</h3>
+                <p>{{ total }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Easy</h3>
+                <p>{{ easy }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Medium</h3>
+                <p>{{ medium }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Hard</h3>
+                <p>{{ hard }}</p>
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+{% endblock %}

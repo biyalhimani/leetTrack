@@ -1,43 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from config import Config
 from database import db
-from models import User
+from models import User, Problem
 
 app = Flask(__name__)
-
 app.config.from_object(Config)
 
 db.init_app(app)
 
 
+# -------------------------
+# Home
+# -------------------------
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-
-    if request.method == "POST":
-
-        email = request.form["email"]
-        password = request.form["password"]
-
-        user = User.query.filter_by(email=email).first()
-
-        if user and check_password_hash(user.password, password):
-
-            session["user_id"] = user.id
-            session["user_name"] = user.full_name
-
-            return redirect(url_for("dashboard"))
-
-        return "Invalid Email or Password"
-
-    return render_template("login.html")
-
-
+# -------------------------
+# Register
+# -------------------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
@@ -62,16 +47,125 @@ def register():
 
     return render_template("register.html")
 
+
+# -------------------------
+# Login
+# -------------------------
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):
+
+            session["user_id"] = user.id
+            session["user_name"] = user.full_name
+
+            return redirect(url_for("dashboard"))
+
+        return "Invalid Email or Password"
+
+    return render_template("login.html")
+
+
+# -------------------------
+# Logout
+# -------------------------
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect(url_for("home"))
+
+
+# -------------------------
+# Dashboard
+# -------------------------
 @app.route("/dashboard")
 def dashboard():
 
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    return f"Welcome {session['user_name']}! You are logged in."
+    total = Problem.query.filter_by(user_id=session["user_id"]).count()
+
+    easy = Problem.query.filter_by(
+        user_id=session["user_id"],
+        difficulty="Easy"
+    ).count()
+
+    medium = Problem.query.filter_by(
+        user_id=session["user_id"],
+        difficulty="Medium"
+    ).count()
+
+    hard = Problem.query.filter_by(
+        user_id=session["user_id"],
+        difficulty="Hard"
+    ).count()
+
+    return render_template(
+        "dashboard.html",
+        total=total,
+        easy=easy,
+        medium=medium,
+        hard=hard
+    )
 
 
+# -------------------------
+# Add Problem
+# -------------------------
+@app.route("/add_problem", methods=["GET", "POST"])
+def add_problem():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        difficulty = request.form["difficulty"]
+        topic = request.form["topic"]
+
+        date_solved = datetime.strptime(
+            request.form["date_solved"],
+            "%Y-%m-%d"
+        ).date()
+
+        time_taken = int(request.form["time_taken"])
+
+        notes = request.form["notes"]
+
+        new_problem = Problem(
+            title=title,
+            difficulty=difficulty,
+            topic=topic,
+            date_solved=date_solved,
+            time_taken=time_taken,
+            notes=notes,
+            user_id=session["user_id"]
+        )
+
+        db.session.add(new_problem)
+        db.session.commit()
+
+        return redirect(url_for("dashboard"))
+
+    return render_template("add_problem.html")
+
+
+# -------------------------
+# Run Application
+# -------------------------
 if __name__ == "__main__":
+
     with app.app_context():
         db.create_all()
 

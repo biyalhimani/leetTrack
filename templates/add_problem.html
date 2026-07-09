@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Problem | LeetTrack
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <section class="auth-container">
+
+        <h1>Add Solved Problem</h1>
+
+        <p>Record your latest LeetCode solution.</p>
+
+        <form action="{{ url_for('add_problem') }}" method="POST">
+
+            <div class="form-group">
+                <label for="title">Problem Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="e.g. Two Sum"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+
+                <select id="difficulty" name="difficulty" required>
+
+                    <option value="">Select Difficulty</option>
+
+                    <option value="Easy">Easy</option>
+
+                    <option value="Medium">Medium</option>
+
+                    <option value="Hard">Hard</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="topic">Topic</label>
+                <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    placeholder="Arrays, DP, Graph..."
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="date_solved">Date Solved</label>
+                <input
+                    type="date"
+                    id="date_solved"
+                    name="date_solved"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="time_taken">Time Taken (minutes)</label>
+                <input
+                    type="number"
+                    id="time_taken"
+                    name="time_taken"
+                    min="1"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+
+                <textarea
+                    id="notes"
+                    name="notes"
+                    rows="5"
+                    placeholder="Write your approach, mistakes, or key learning..."></textarea>
+
+            </div>
+
+            <button type="submit" class="btn btn-cta">
+                Save Problem
+            </button>
+
+        </form>
+
+        <p style="margin-top:20px;">
+            <a href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+        </p>
+
+    </section>
+
+</main>
+
+{% endblock %}
