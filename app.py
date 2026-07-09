@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from database import db
 from models import User, Problem
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
