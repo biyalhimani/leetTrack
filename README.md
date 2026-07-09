@@ -158,7 +158,7 @@ pip install -r requirements.txt
 Configure your PostgreSQL database in `config.py`:
 
 ```python
-DATABASE_URL=your_database_url
+DATABASE_URL= postgresql://leettrack_user:dPtOzCYp0dSKXAEd2aN2E4IWyYdDNU0b@dpg-d97uh9pkh4rs73dk4if0-a.singapore-postgres.render.com/leettrack
 ```
 
 Run the application
