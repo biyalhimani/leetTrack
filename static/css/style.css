@@ -490,3 +490,31 @@ textarea {
 .btn-danger:hover {
     background: #b91c1c;
 }
+
+/* =========================
+   Charts
+========================= */
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.chart-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+}
+
+.chart-card h2 {
+    text-align: center;
+    color: #2563eb;
+    margin-bottom: 20px;
+}
+
+.chart-card canvas {
+    max-height: 350px;
+}

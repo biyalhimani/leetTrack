@@ -8,59 +8,132 @@ Dashboard | LeetTrack
 
 <main>
 
-    <section class="dashboard-container">
+<section class="dashboard-container">
 
-        <div class="dashboard-header">
+    <div class="dashboard-header">
 
-            <div>
-                <h1>Welcome, {{ session["user_name"] }} 👋</h1>
-                <p>Track your coding progress and stay consistent.</p>
-            </div>
+        <div>
+            <h1>Welcome, {{ session["user_name"] }} 👋</h1>
+            <p>Track your coding progress and stay consistent.</p>
+        </div>
 
-            <div class="dashboard-buttons">
+        <div class="dashboard-buttons">
 
-                <a href="{{ url_for('add_problem') }}" class="btn btn-cta">
-                    + Add Problem
-                </a>
+            <a href="{{ url_for('add_problem') }}" class="btn btn-cta">
+                + Add Problem
+            </a>
 
-                <a href="{{ url_for('problems') }}" class="btn btn-primary">
-                    View Problems
-                </a>
+            <a href="{{ url_for('problems') }}" class="btn btn-primary">
+                View Problems
+            </a>
 
-                <a href="{{ url_for('logout') }}" class="btn btn-danger">
-                    Logout
-                </a>
-
-            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">
+                Logout
+            </a>
 
         </div>
 
-        <section class="stats-grid">
+    </div>
 
-            <div class="stat-card">
-                <h3>Total Solved</h3>
-                <p>{{ total }}</p>
-            </div>
 
-            <div class="stat-card">
-                <h3>Easy</h3>
-                <p>{{ easy }}</p>
-            </div>
+    <section class="stats-grid">
 
-            <div class="stat-card">
-                <h3>Medium</h3>
-                <p>{{ medium }}</p>
-            </div>
+        <div class="stat-card">
+            <h3>Total Solved</h3>
+            <p>{{ total }}</p>
+        </div>
 
-            <div class="stat-card">
-                <h3>Hard</h3>
-                <p>{{ hard }}</p>
-            </div>
+        <div class="stat-card">
+            <h3>Easy</h3>
+            <p>{{ easy }}</p>
+        </div>
 
-        </section>
+        <div class="stat-card">
+            <h3>Medium</h3>
+            <p>{{ medium }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Hard</h3>
+            <p>{{ hard }}</p>
+        </div>
 
     </section>
 
+
+    <section class="charts-container">
+
+        <div class="chart-card">
+
+            <h2>Difficulty Distribution</h2>
+
+            <canvas id="difficultyChart"></canvas>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h2>Topic Distribution</h2>
+
+            <canvas id="topicChart"></canvas>
+
+        </div>
+
+    </section>
+
+</section>
+
 </main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const difficultyChart = new Chart(
+    document.getElementById("difficultyChart"),
+    {
+        type: "pie",
+
+        data: {
+
+            labels: ["Easy", "Medium", "Hard"],
+
+            datasets: [{
+
+                data: [
+                    {{ easy }},
+                    {{ medium }},
+                    {{ hard }}
+                ]
+
+            }]
+        }
+    }
+);
+
+
+const topicChart = new Chart(
+    document.getElementById("topicChart"),
+    {
+        type: "bar",
+
+        data: {
+
+            labels: {{ topics.keys() | list | tojson }},
+
+            datasets: [{
+
+                label: "Problems",
+
+                data: {{ topics.values() | list | tojson }}
+
+            }]
+        }
+    }
+);
+
+</script>
 
 {% endblock %}

@@ -110,15 +110,27 @@ def dashboard():
         difficulty="Hard"
     ).count()
 
+    problems = Problem.query.filter_by(
+        user_id=session["user_id"]
+    ).all()
+
+    topics = {}
+
+    for problem in problems:
+
+        if problem.topic in topics:
+            topics[problem.topic] += 1
+        else:
+            topics[problem.topic] = 1
+
     return render_template(
         "dashboard.html",
         total=total,
         easy=easy,
         medium=medium,
-        hard=hard
+        hard=hard,
+        topics=topics
     )
-
-
 # -------------------------
 # Add Problem
 # -------------------------
