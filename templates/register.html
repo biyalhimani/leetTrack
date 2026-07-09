@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login | LeetTrack
+Register | LeetTrack
 {% endblock %}
 
 {% block content %}
@@ -10,11 +10,21 @@ Login | LeetTrack
 
     <section class="auth-container">
 
-        <h1>Welcome Back</h1>
+        <h1>Create Account</h1>
 
-        <p>Sign in to continue tracking your coding journey.</p>
+        <p>Start tracking your coding journey today.</p>
 
-        <form>
+        <form action="{{ url_for('register') }}" method="POST">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+            </div>
 
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -32,23 +42,29 @@ Login | LeetTrack
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Enter your password"
+                    placeholder="Create a password"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirm-password"
+                    name="confirm-password"
+                    placeholder="Confirm your password"
                     required>
             </div>
 
             <button type="submit" class="btn btn-cta">
-                Login
+                Create Account
             </button>
 
         </form>
 
         <p>
-            Don't have an account?
-            <a href="{{ url_for('register') }}">Register</a>
-        </p>
-
-        <p>
-            <a href="#">Forgot Password?</a>
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
         </p>
 
         <p>

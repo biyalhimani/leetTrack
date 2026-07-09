@@ -14,7 +14,7 @@ Login | LeetTrack
 
         <p>Sign in to continue tracking your coding journey.</p>
 
-        <form>
+        <form action="{{ url_for('login') }}" method="POST">
 
             <div class="form-group">
                 <label for="email">Email Address</label>
