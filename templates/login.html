@@ -1,69 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | LeetTrack</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+{% block title %}
+Login | LeetTrack
+{% endblock %}
 
-<body>
+{% block content %}
 
-    <main>
+<main>
 
-        <section class="auth-container">
+    <section class="auth-container">
 
-            <h1>Welcome Back</h1>
+        <h1>Welcome Back</h1>
 
-            <p>Sign in to continue tracking your coding journey.</p>
+        <p>Sign in to continue tracking your coding journey.</p>
 
-            <form>
+        <form>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        required>
-                </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+            </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        required>
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
+            </div>
 
-                <button type="submit" class="btn btn-cta">
-                    Login
-                </button>
+            <button type="submit" class="btn btn-cta">
+                Login
+            </button>
 
-            </form>
+        </form>
 
-            <p>
-                Don't have an account?
-                <a href="{{ url_for('register') }}">Register</a>
-            </p>
+        <p>
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Register</a>
+        </p>
 
-            <p>
-                <a href="#">Forgot Password?</a>
-            </p>
+        <p>
+            <a href="#">Forgot Password?</a>
+        </p>
 
-            <p>
-                <a href="{{ url_for('register') }}">Register</a>
-            </p>
+        <p>
+            <a href="{{ url_for('home') }}">← Back to Home</a>
+        </p>
 
-        </section>
+    </section>
 
-    </main>
+</main>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-</body>
-</html>
+{% endblock %}
