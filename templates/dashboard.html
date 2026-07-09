@@ -18,17 +18,22 @@ Dashboard | LeetTrack
             </div>
 
             <div class="dashboard-buttons">
+
                 <a href="{{ url_for('add_problem') }}" class="btn btn-cta">
                     + Add Problem
                 </a>
 
-                <a href="{{ url_for('logout') }}" class="btn btn-secondary">
+                <a href="{{ url_for('problems') }}" class="btn btn-primary">
+                    View Problems
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">
                     Logout
                 </a>
+
             </div>
 
         </div>
-
 
         <section class="stats-grid">
 

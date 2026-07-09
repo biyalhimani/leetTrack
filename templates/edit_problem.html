@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Problem | LeetTrack
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+    <section class="auth-container">
+
+        <h1>Edit Problem</h1>
+
+        <p>Update your solved problem details.</p>
+
+        <form action="{{ url_for('edit_problem', problem_id=problem.id) }}" method="POST">
+
+            <div class="form-group">
+                <label for="title">Problem Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ problem.title }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+
+                <select id="difficulty" name="difficulty" required>
+
+                    <option value="Easy"
+                        {% if problem.difficulty == "Easy" %}selected{% endif %}>
+                        Easy
+                    </option>
+
+                    <option value="Medium"
+                        {% if problem.difficulty == "Medium" %}selected{% endif %}>
+                        Medium
+                    </option>
+
+                    <option value="Hard"
+                        {% if problem.difficulty == "Hard" %}selected{% endif %}>
+                        Hard
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="topic">Topic</label>
+                <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    value="{{ problem.topic }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="date_solved">Date Solved</label>
+                <input
+                    type="date"
+                    id="date_solved"
+                    name="date_solved"
+                    value="{{ problem.date_solved }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="time_taken">Time Taken (minutes)</label>
+                <input
+                    type="number"
+                    id="time_taken"
+                    name="time_taken"
+                    value="{{ problem.time_taken }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes</label>
+
+                <textarea
+                    id="notes"
+                    name="notes"
+                    rows="5">{{ problem.notes }}</textarea>
+
+            </div>
+
+            <button type="submit" class="btn btn-cta">
+                Update Problem
+            </button>
+
+        </form>
+
+        <p style="margin-top:20px; text-align:center;">
+            <a href="{{ url_for('problems') }}">← Back to Problems</a>
+        </p>
+
+    </section>
+
+</main>
+
+{% endblock %}

@@ -427,3 +427,66 @@ footer a:hover {
 textarea {
     resize: vertical;
 }
+/* =========================
+   Problems Table
+========================= */
+
+.problems-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+}
+
+.problems-table th,
+.problems-table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.problems-table th {
+    background: #2563eb;
+    color: white;
+}
+
+.problems-table tr:nth-child(even) {
+    background: #f8f9fc;
+}
+
+.problems-table tr:hover {
+    background: #eef4ff;
+}
+
+.problems-table .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+/* =========================
+   Dashboard Buttons
+========================= */
+
+.dashboard-buttons .btn {
+    color: white;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}

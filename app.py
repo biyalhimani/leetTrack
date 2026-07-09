@@ -160,6 +160,78 @@ def add_problem():
 
     return render_template("add_problem.html")
 
+@app.route("/problems")
+def problems():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    problems = Problem.query.filter_by(
+        user_id=session["user_id"]
+    ).order_by(Problem.date_solved.desc()).all()
+
+    return render_template(
+        "problems.html",
+        problems=problems
+    )
+
+@app.route("/delete_problem/<int:problem_id>")
+def delete_problem(problem_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    problem = Problem.query.filter_by(
+        id=problem_id,
+        user_id=session["user_id"]
+    ).first()
+
+    if problem:
+
+        db.session.delete(problem)
+        db.session.commit()
+
+    return redirect(url_for("problems"))
+
+
+
+@app.route("/edit_problem/<int:problem_id>", methods=["GET", "POST"])
+def edit_problem(problem_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    problem = Problem.query.filter_by(
+        id=problem_id,
+        user_id=session["user_id"]
+    ).first()
+
+    if not problem:
+        return "Problem Not Found"
+
+    if request.method == "POST":
+
+        problem.title = request.form["title"]
+        problem.difficulty = request.form["difficulty"]
+        problem.topic = request.form["topic"]
+
+        problem.date_solved = datetime.strptime(
+            request.form["date_solved"],
+            "%Y-%m-%d"
+        ).date()
+
+        problem.time_taken = int(request.form["time_taken"])
+        problem.notes = request.form["notes"]
+
+        db.session.commit()
+
+        return redirect(url_for("problems"))
+
+    return render_template(
+        "edit_problem.html",
+        problem=problem
+    )
+
 
 # -------------------------
 # Run Application
